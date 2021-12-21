@@ -1,14 +1,14 @@
 import IOptions from "../types/Command.ts";
+import args = Deno.args;
 
 class Invoker {
     _args: Array<String> = [""];
     _name: string = "";
     _options: Array<IOptions> = [];
-    _argument: string = "";
+    _argument: Array<any> = [];
     constructor(args: Array<String>) {
         this._args = args;
     }
-
     name(name: string) {
         this._name = name;
         return this;
@@ -17,21 +17,9 @@ class Invoker {
         this._options.push({ flag, named_flag: long_flag });
         return this;
     }
-    argument(name: string) {
-        this._argument = name;
+    argument(...name: Array<String>) {
+        this._argument = [...name];
         return this;
-    }
-    log() {
-        console.log(this);
-    }
-    getType(arg: String) {
-        const isFlag = arg.includes("-");
-        if (isFlag) {
-            return "FLAG";
-        }
-        {
-            return "ARG";
-        }
     }
     getFlags() {
         const flags: any = [];
@@ -44,6 +32,18 @@ class Invoker {
     }
     normalizeNamedFlag(namedFlag: string) {
         return namedFlag.substring(namedFlag.indexOf("-") + 2);
+    }
+    parseArgument(){
+        let temp: any = {};
+        const parse = this._args.slice(this._args.indexOf(this._name) +1 ,this.getFlags()[0].index);
+        parse.forEach((arg,index) => {
+            let obj: any = {};
+            const key = this._argument[index];
+               if(key !== undefined){
+                   temp[key] = arg;
+               }
+        });
+        return temp;
     }
     parseOptions() {
         const flags = this.getFlags();
@@ -74,8 +74,9 @@ class Invoker {
     }
     run(callback: Function) {
         const options = this.parseOptions();
+        const args = this.parseArgument();
         const fire = () => {
-            callback(options);
+            callback(args,options);
         };
         return [this, fire];
     }
