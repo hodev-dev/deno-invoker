@@ -1,25 +1,37 @@
 import { CommandRegister, Invoker } from "./import.ts";
-
 const register = new CommandRegister();
 
 const helper = new Invoker(Deno.args)
-    .name("helper")
+  .name("helper")
   .argument("arg1")
   .option("-d", "--debug")
-  .option("-s", "--silence")
   .option("-w", "--write")
   .option("-n", "--name")
-  .run((args: any,options: any) => {
-      console.log(args,options);
+  .then((optionError: string) => {
+    console.log(optionError);
+  })
+  .finally((args: any, options: any) => {
+
   });
 
 const dev = new Invoker(Deno.args)
-    .name("dev")
-  .argument("source","dest")
-    .option("-d", "--dev")
-    .option("-s", "--slow")
-  .run((args: any,options: any) => {
-    console.log(args,options);
+  .name("dev")
+  .argument("source", "dest", "last")
+  .option("-d", "--dev")
+  .option("-s", "--slow")
+  .then((data: string, next: Function, reject: Function) => {
+    console.log("first", data);
+    return next();
+  })
+  .then((data: string, next: Function, reject: Function) => {
+    console.log("second", data);
+    return next();
+  })
+  .then((data: string, next: Function, reject: Function) => {
+    console.log("third", data);
+  })
+  .finally((args: any, options: any) => {
+    console.log("run");
   });
 
 register.add([helper, dev]);
