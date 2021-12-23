@@ -2,8 +2,8 @@ import {Invoker, Command} from "./export.ts";
 
 const invoker = new Invoker();
 
-const helper = new Command(Deno.args)
-    .name("helper")
+const get = new Command(Deno.args)
+    .name("get")
     .argument("arg1")
     .option("-i", "--id")
     .sequence(function* tasks() {
@@ -28,5 +28,5 @@ const helper = new Command(Deno.args)
         console.log(data);
     });
 
-invoker.register([helper]);
+invoker.register([get]);
 await invoker.run();
