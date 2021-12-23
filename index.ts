@@ -8,25 +8,25 @@ const helper = new Command(Deno.args)
     .option("-i", "--id")
     .sequence(function* tasks() {
         yield async (data: any, next: Function, reject: Function) => {
-            const {ID} = data.parse;
-            return next({"id": ID});
+            const id = data.parse.options.id[0];
+            return next({"id": id});
         };
         yield async (data: any, next: Function, reject: Function) => {
-            const {prev: id} = data.response;
-            console.log(id);
-            const jsonResponse = await fetch(`https://jsonplaceholder.typicode.com/todos/${id}`);
+            const {prev} = data.response;
+            const jsonResponse = await fetch(`https://jsonplaceholder.typicode.com/todos/${prev.id}`);
             const jsonData = await jsonResponse.json();
             return next({json: jsonData});
         };
         yield async (data: any, next: Function, reject: Function) => {
             const {prev} = data.response;
-            console.log(prev);
-            return next({});
+            return reject({error: "Something Wrong"});
         };
     }).catch((err: any) => {
-        const { error } = err.data;
+        const {error} = err.data;
         console.log(error);
-    }).finally((data: any) => {});
+    }).finally((data: any) => {
+        console.log(data);
+    });
 
 invoker.register([helper]);
 await invoker.run();
