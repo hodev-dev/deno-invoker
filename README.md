@@ -6,7 +6,7 @@
 import {Invoker, Command} from "./export.ts";
 ```
 
-Example:
+# Example:
 
 ```typescript
 const invoker = new Invoker();
@@ -45,14 +45,14 @@ await invoker.run();
 ```bash
 deno run --allow-net .\filename.ts get -i 2
 ```
-## task methods
+# task methods
 
-- next: send data to next task;
-- reject: reject task with data;
-- catch: run after reject and receives reject data;
-- finally: runs in the end
+- **next:** send data to next task;
+- **reject:** reject task with data;
+- **catch:** run after reject and receives reject data;
+- **finally:** runs in the end
 
-## data object
+# data object
 
 data has two part
 
@@ -74,8 +74,8 @@ data has two part
 ```
 
 - **response:** which gives you information passed but **next()** method 
-- prev contains data of previous task that passed by **next()**
-- stack contains all data of all task till this task
+- **prev:** contains data of previous task that passed by **next()**
+- **stack:** contains all data of all task till this task
 
 ```json
  {
