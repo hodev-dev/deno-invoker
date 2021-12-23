@@ -1,2 +1,2 @@
 # deno-invoker
-![](.img/deno-invoker.png)
+![](.img/deno-invoker-min.png)
