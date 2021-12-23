@@ -13,8 +13,9 @@ const invoker = new Invoker();
 
 const get = new Command(Deno.args)
     .name("get")
-    .argument("arg1")
+    .argument("arg1","arg2")
     .option("-i", "--id")
+    .option("-p", "--page")
     .sequence(function* tasks() {
         yield async (data: any, next: Function, reject: Function) => {
             const id = data.parse.options.id[0];
