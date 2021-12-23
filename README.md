@@ -3,7 +3,7 @@
 ![](.img/deno-invoker-min.png)
 
 ```
-import {Invoker, Command} from "./export.ts";
+import {Invoker, Command} from "https://deno.land/x/invoker@0.0.2/export.ts";
 ```
 
 # Example:
