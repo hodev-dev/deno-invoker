@@ -54,7 +54,7 @@ deno run --allow-net .\filename.ts get -i 2
 
 # data object
 
-data has two part
+data object has **two** part
 
 - **parse:** which parse command and gives you data about command
 
@@ -74,8 +74,8 @@ data has two part
 ```
 
 - **response:** which gives you information passed but **next()** method 
-- **prev:** contains data of previous task that passed by **next()**
-- **stack:** contains all data of all task till this task
+    1. **prev:** contains data of previous task that passed by **next()**
+    2. **stack:** contains all data of all task till this task
 
 ```json
  {
